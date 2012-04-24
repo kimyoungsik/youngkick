@@ -1,0 +1,31 @@
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#progress" data-toggle="tab">진행</a></li>
+  <li class><a href="#after" data-toggle="tab">종료</a></li>
+  <li class><a href="#cancel" data-toggle="tab">취소</a></li>
+  <% if user_signed_in? || admin_signed_in? %>
+		<li class><a href="#pending" data-toggle="tab">대기</a></li>
+		<li class><a href="#participation" data-toggle="tab">참여경기</a></li>
+	<% end %>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="progress">
+		<%= render "progress_table"%>
+	</div>
+  <div class="tab-pane" id="after">
+  	<%= render "after_table"%>
+  </div>
+  <div class="tab-pane" id="cancel">
+		<%= render "cancel_table"%>
+	</div>
+	<% if user_signed_in? || admin_signed_in? %>
+ 	 <div class="tab-pane" id="pending">
+	  	<%= render "pending_table"%>
+	 </div>
+	 <div class="tab-pane" id="participation">
+	  	<%= render "participation_table"%>
+	 </div>
+	<% end %>
+</div>
+<% if admin_signed_in? || user_signed_in? %>
+	<%= link_to 'New', new_ground_path, :class => 'btn btn-primary' %>
+<% end %>

@@ -1,0 +1,37 @@
+<h1>Recordbook</h1>
+
+<p>
+  <b>Ground</b><br>
+  <%= @recordbook.ground_id %>
+</p>
+
+<p>
+  <b>User</b><br>
+  <%= @recordbook.user_id %>
+</p>
+
+<p>
+  <b>Position</b><br>
+  <%= @recordbook.position_id %>
+</p>
+
+
+
+<p>
+  <b>fPoint</b><br>
+  <%= @recordbook.forwardpoint %>
+</p>
+<p>
+  <b>mPoint</b><br>
+  <%= @recordbook.midfieldpoint %>
+</p>
+<p>
+  <b>Score</b><br>
+  <%= @recordbook.score %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', recordbooks_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_recordbook_path(@recordbook), :class => 'btn' %>
+  <%= link_to 'Delete', recordbook_path(@recordbook), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

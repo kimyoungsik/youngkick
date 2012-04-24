@@ -1,0 +1,47 @@
+<%= form_for @recordbook, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+    <legend><%= controller.action_name.capitalize %> Recordbook</legend>
+
+    <div class="control-group">
+      <%= f.label :ground_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :ground_id, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :user_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :user_id, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :position_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :position_id, :class => 'number_field' %>
+      </div>
+    </div>
+
+
+
+    <div class="control-group">
+      <%= f.label :point, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :point, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :score, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :score, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', recordbooks_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>

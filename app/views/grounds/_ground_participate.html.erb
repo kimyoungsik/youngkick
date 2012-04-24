@@ -1,0 +1,232 @@
+<% if user_signed_in? %>
+	
+
+	<ul id = "team_select">
+		<li class="well">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>A팀</th>
+						<th>포지션</th>
+						<th><i class="icon-user"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<% for j in 1..4 %>
+						<% players =  @ground.participations.find_all_by_team_id_and_position_id(1,j) %>
+						<% players.each do |player| %>
+						<tr>
+							<td><%= Team.find(player.team_id).name %></td>
+							<td><%= Position.find(player.position_id).name %></td>
+							<td><%= link_to profile_photo(player.user, :small, 20), user_path(player.user) %></td>
+							
+						</tr>
+						<% end %>
+						<% end %>
+	
+				</tbody>	
+			</table>
+		</li>
+		<li class="well" >
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>B팀</th>
+						<th>포지션</th>
+						<th><i class="icon-user"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for j in 1..4 %>
+						<% players =  @ground.participations.find_all_by_team_id_and_position_id(2,j) %>
+						<% players.each do |player| %>
+						<tr>
+							<td><%= Team.find(player.team_id).name %></td>
+							<td><%= Position.find(player.position_id).name %></td>
+							<td><%= link_to profile_photo(player.user, :small, 20), user_path(player.user) %></td>
+						</tr>
+						<% end %>
+					<% end %>
+
+				</tbody>	
+			</table>
+		</li>
+	</ul>
+	
+		<table class="table table-striped">
+	<end>
+		<%ateamforward =  @ground.participations.find_all_by_team_id_and_position_id(1,1) %>
+		<%ateammidfield =  @ground.participations.find_all_by_team_id_and_position_id(1,2) %>
+		<%ateamback =  @ground.participations.find_all_by_team_id_and_position_id(1,3) %>
+		<%ateamkeeper =  @ground.participations.find_all_by_team_id_and_position_id(1,4) %>
+		<%bteamforward =  @ground.participations.find_all_by_team_id_and_position_id(2,1) %>
+		<%bteammidfield =  @ground.participations.find_all_by_team_id_and_position_id(2,2) %>
+		<%bteamback =  @ground.participations.find_all_by_team_id_and_position_id(2,3) %>
+		<%bteamkeeper =  @ground.participations.find_all_by_team_id_and_position_id(2,4) %>
+		
+		
+		<!-- <div>수비수(<%= ateamback.length %>)
+					<% ateamback.each do |player| %>
+						<%= player.user.email %>
+					<% end %>
+				</div>
+				<%ateamkeeper =  @ground.participations.find_all_by_team_id_and_position_id(1,4) %>
+				<div>골키퍼(<%= ateamkeeper.length %>)
+					<% ateamkeeper.each do |player| %>
+						<%= player.user.email %>
+					<% end %>
+				</div>
+				
+				B팀 <br>
+				<%bteamforward =  @ground.participations.find_all_by_team_id_and_position_id(2,1) %>
+				<div>공격수(<%= bteamforward.length %>)
+					<% bteamforward.each do |player| %>
+						<%= player.user.email %>
+					<% end %>
+				</div>
+				<%bteammidfield =  @ground.participations.find_all_by_team_id_and_position_id(2,2) %>
+				<div>미드필더(<%= bteammidfield.length %>)
+					<% bteammidfield.each do |player| %>
+						<%= player.user.email %>
+					<% end %>
+				</div>
+				<%bteamback =  @ground.participations.find_all_by_team_id_and_position_id(2,3) %>
+				<div>수비수(<%= bteamback.length %>)
+					<% bteamback.each do |player| %>
+						<%= player.user.email %>
+					<% end %>
+				</div>
+				<%bteamkeeper =  @ground.participations.find_all_by_team_id_and_position_id(2,4) %>
+				<div>골키퍼(<%= bteamkeeper.length %>)
+					<% bteamkeeper.each do |player| %>
+						<%= player.user.email %>
+					<% end %>
+				</div> -->
+		
+		<% if current_user.participates_in?(@ground) %>
+		<div class="alert alert-success"%>
+         <a class="close" data-dismiss="alert">x</a>
+				참여했습니다.
+    </div>
+			<%= link_to "취소", current_user.participations.find_by_ground_id(@ground.id), 
+			:method => :delete, :remote => true, :confirm => "정말로 참여를 취소하시겠습니까?", :class => 'btn btn-danger' %>
+		<% else %>
+			<ul>
+				<li class="well">
+					<% if ateamforward.length < @ground.forwardcount%>
+						<div>
+							<%= form_for current_user.participations.build(:ground_id => @ground.id,:team_id => 1, :position_id => 1), :remote => true do |f| %>
+								<%= f.hidden_field :ground_id %>
+								<%= f.hidden_field :position_id %>
+								<%= f.hidden_field :team_id %>
+								<%= f.submit "포워드", :class => "btn btn-info" %>
+							<% end %>
+							<%= "#{ateamforward.length} / #{@ground.forwardcount}"%>
+						</div>	
+					<% else %>
+					  <div> A팀 공격수 정원 초과 </div>
+					<% end %>
+					<% if ateammidfield.length < @ground.midfieldcount%>
+						<div >
+							<%= form_for current_user.participations.build(:ground_id => @ground.id,:team_id => 1, :position_id => 2), :remote => true do |f| %>
+								<%= f.hidden_field :ground_id %>
+								<%= f.hidden_field :position_id %>
+								<%= f.hidden_field :team_id %>
+								<%= f.submit "미드필더", :class => "btn btn-info" %>
+							<% end %>
+							<%= "#{ateammidfield.length} / #{@ground.midfieldcount}"%>
+						</div>
+					<% else %>
+					  <div> A팀 미드필더 정원 초과 </div>
+					<% end %>
+	
+					<% if ateamback.length < @ground.backcount%>
+						<div >
+							<%= form_for current_user.participations.build(:ground_id => @ground.id,:team_id => 1, :position_id => 3), :remote => true do |f| %>
+								<%= f.hidden_field :ground_id %>
+								<%= f.hidden_field :position_id %>
+								<%= f.hidden_field :team_id %>
+								<%= f.submit "수비", :class => "btn btn-info" %>
+							<% end %>
+							<%= "#{ateamback.length} / #{@ground.backcount}"%>
+						</div>
+					<% else %>
+					  <div> A팀 수비수 정원 초과 </div>
+					<% end %>
+	
+					<% if ateamkeeper.length < @ground.keepercount%>
+						<div >
+							<%= form_for current_user.participations.build(:ground_id => @ground.id,:team_id => 1, :position_id => 4), :remote => true do |f| %>
+								<%= f.hidden_field :ground_id %>
+								<%= f.hidden_field :position_id %>
+								<%= f.hidden_field :team_id %>
+								<%= f.submit "키퍼", :class => "btn btn-info" %>
+							<% end %>
+							<%= "#{ateamback.length} / #{@ground.backcount}"%>
+						</div>
+					<% else %>
+					  <div> A팀 골키퍼 정원 초과 </div>
+					<% end %>
+				</li>
+	
+				<li class="well">
+					<% if bteamforward.length < @ground.forwardcount%>
+						<div>
+							<%= form_for current_user.participations.build(:ground_id => @ground.id,:team_id => 2, :position_id => 1), :remote => true do |f| %>
+								<%= f.hidden_field :ground_id %>
+								<%= f.hidden_field :position_id %>
+								<%= f.hidden_field :team_id %>
+								<%= f.submit "포워드", :class => "btn btn-danger" %>
+							<% end %>
+							<%= "#{bteamforward.length} / #{@ground.forwardcount}"%>
+						</div>	
+					<% else %>
+					  <div> B팀 공격수 정원 초과 </div>
+					<% end %>
+					<% if bteammidfield.length < @ground.midfieldcount%>
+						<div >
+							<%= form_for current_user.participations.build(:ground_id => @ground.id,:team_id => 2, :position_id => 2), :remote => true do |f| %>
+								<%= f.hidden_field :ground_id %>
+								<%= f.hidden_field :position_id %>
+								<%= f.hidden_field :team_id %>
+								<%= f.submit "미드필더", :class => "btn btn-danger" %>
+							<% end %>
+							<%= "#{bteammidfield.length} / #{@ground.midfieldcount}"%>
+						</div>
+					<% else %>
+					  <div> B팀 미드필더 정원 초과 </div>
+					<% end %>
+	
+					<% if bteamback.length < @ground.backcount%>
+						<div >
+							<%= form_for current_user.participations.build(:ground_id => @ground.id,:team_id => 2, :position_id => 3), :remote => true do |f| %>
+								<%= f.hidden_field :ground_id %>
+								<%= f.hidden_field :position_id %>
+								<%= f.hidden_field :team_id %>
+								<%= f.submit "수비", :class => "btn btn-danger" %>
+							<% end %>
+							<%= "#{bteamback.length} / #{@ground.backcount}"%>
+						</div>
+					<% else %>
+					  <div> B팀 수비수 정원 초과 </div>
+					<% end %>
+	
+					<% if bteamkeeper.length < @ground.keepercount%>
+						<div >
+							<%= form_for current_user.participations.build(:ground_id => @ground.id,:team_id => 2, :position_id => 4), :remote => true do |f| %>
+								<%= f.hidden_field :ground_id %>
+								<%= f.hidden_field :position_id %>
+								<%= f.hidden_field :team_id %>
+								<%= f.submit "키퍼", :class => "btn btn-danger" %>
+							<% end %>
+							<%= "#{bteamkeeper.length} / #{@ground.keepercount}"%>
+						</div>
+					<% else %>
+					  <div> B팀 골키퍼 정원 초과 </div>
+					<% end %>
+				<% end %>
+			</li>
+		</ul>
+
+<% end %>

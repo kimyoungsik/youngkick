@@ -1,0 +1,12 @@
+<% if user_signed_in? %>
+ <div class="item-content">
+		<%= form_for @kit, :validate => true , :html => { :multipart => true } do |f| %>
+			<%= f.text_area :content %>
+			<%= f.hidden_field :kitable_id %>
+			<%= f.hidden_field :kitable_type %>
+		<div id="kit-button-box">
+		<%= f.submit "Kit", :class => "kit-submit" %>
+		</div>
+		<% end %>
+	</div> 
+<% end %>

@@ -1,0 +1,26 @@
+<h1>Positions</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @positions.each do |position| %>
+      <tr>
+        <td><%= position.id %></td>
+        <td><%= link_to position.name, position_path(position) %></td>
+        <td><%= position.created_at %></td>
+        <td>
+          <%= link_to 'Edit', edit_position_path(position), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', position_path(position), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_position_path, :class => 'btn btn-primary' %>

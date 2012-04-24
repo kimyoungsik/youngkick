@@ -1,0 +1,36 @@
+<!-- <%= simple_form_for @ground, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+    <legend><%= controller.action_name.capitalize %> Ground</legend>
+
+
+		<% if  Time.now - ( @ground.datetime - 1.day - 9.hours) > 0 %>
+			<% if @ground.participants.length < @ground.limit%>
+				<% col = ["cancel"] %>
+				<%= f.input :status, :collection => col,:selected =>1 %>
+			<% end %>
+		<% end %>
+		<% f.input :user_id %>
+    <%= f.input :title ,:label => '제목'%>
+		<%= f.input :location,:label => '위치' %>
+		<%= f.input :datetime ,:label => '날짜'%>
+		<%= f.input :description ,:label => '세부사항'%>
+		
+		포메이션
+		<%= f.input :forwardcount ,:label => '공격수', :collection => 1..9, :selected => 2 %>
+		<%= f.input :midfieldcount ,:label => '미드필더', :collection => 1..9, :selected => 4 %>
+		<%= f.input :backcount ,:label => '수비수', :collection => 1..9, :selected => 4 %>
+		<%= f.input :keepercount ,:label => '키퍼', :collection => 1..9, :selected => 1 %>
+		<%= f.input :limit, :label => '하루전 모집 최소 인원', :collection => 16..22, :selected => 22%>
+		<% if admin_signed_in? %>
+			<%= f.input :status%>
+   		<%= f.input :winner%>
+			<%= f.input :score%>
+		<% end %>
+		
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', grounds_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %> -->
+<%= render :partial => 'form' %>

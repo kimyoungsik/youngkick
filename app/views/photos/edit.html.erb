@@ -1,0 +1,73 @@
+<script>
+
+// Remember to invoke within jQuery(window).load(...)
+// If you don't, Jcrop may not initialize properly
+jQuery(window).load(function(){
+	jQuery('#cropbox').Jcrop({
+		onChange: update_crop, 
+		onSelect: update_crop,
+		setSelect: [0, 0, 30, 30],
+		aspectRatio: 1
+	});
+
+});
+
+// Our simple event handler, called from onChange and onSelect
+// event handlers, as per the Jcrop invocation above
+function update_crop(coords){
+	var ratio = <%= @photo.image_geometry(:original).width %> / 580;
+	var w_h_ratio = <%= @photo.image_geometry(:original).height %> / <%= @photo.image_geometry(:original).width %>
+	if (parseInt(coords.w) > 0)
+	{
+		var rx = 100 / coords.w;
+		var ry = 100 / coords.h;
+
+		jQuery('#preview').css({
+
+			width: Math.round(rx * 580) + 'px',
+			height: Math.round(ry * 580 * w_h_ratio) + 'px',
+			marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+			marginTop: '-' + Math.round(ry * coords.y) + 'px'
+		});
+	}
+
+	jQuery('#crop_x').val(Math.round(coords.x * ratio));
+	jQuery('#crop_y').val(Math.round(coords.y * ratio));
+	jQuery('#crop_w').val(Math.round(coords.w * ratio));
+	jQuery('#crop_h').val(Math.round(coords.h * ratio));
+}
+
+</script>
+<div class="main-box photo-edit">
+	<div class="item-title">
+		<h2>프로필 사진 편집하기</h2>
+		<span>원하는 영역을 드래그하여 프로필 이미지로 만들어보세요.</span>
+	</div>
+	<div class="item-box crop-box">
+		<div id="jcrop_main">
+			<%= image_tag(@photo.image.url(:original), :alt => current_user.email, :id => "cropbox", :width => 580) %>
+		</div>
+	</div>
+		
+	<div class="item-box crop-box">
+		<div id="jcrop_preview">
+			<%= image_tag(@photo.image.url(:original), :alt => "#{current_user.email} preview", :id => "preview") %>
+		</div>
+		<div id="crop-text">
+			<div>위 이미지에 해당 부분을 드래그하여</div> 
+			<div>선택한 후, 수정하기 버튼을 클릭하세요.</div> 
+
+			<!-- This is the form that our event handler fills -->
+			<div class="jcrop_coords">
+				<%= form_for(@photo) do |f| %>
+				<%= f.hidden_field :crop_x, :id => "crop_x" %>
+				<%= f.hidden_field :crop_y, :id => "crop_y" %>
+				<%= f.hidden_field :crop_w, :id => "crop_w" %>
+				<%= f.hidden_field :crop_h, :id => "crop_h" %>  
+				<%= f.submit "수정하기", :id => "image_crop", :disable_with => "수정하기", :class => "default-button", :id => "edit-photo-submit" %>
+				<% end %>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>	
+</div>

@@ -1,0 +1,41 @@
+<h1>Recordbooks</h1>
+<table id = "recordbooks" class="display" >
+  <thead>
+    <tr>
+      <th>날짜</th>
+			<th>User</th>
+      <th>Position</th>
+      <th>score</th>
+      <th>승패</th>
+      <th>공격포인트</th>
+      <th>미드포인트</th>
+      <th>수비포인트</th>
+      <th>키퍼포인트</th>
+
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recordbooks.each do |recordbook| %>
+      <tr>
+				<% ground = Ground.find(recordbook.ground_id) %>
+        <td><%= link_to ground.datetime, ground_path(ground)%></td>
+				<td><%= recordbook.user.email %></td>
+        <td><%= Position.find_by_id(recordbook.position_id).name %></td>
+        <td><%= ground.score %></td>
+        <td><%= getResult(recordbook) %></td>
+				<td><%= recordbook.forwardpoint %></td>
+        <td><%= recordbook.midfieldpoint %></td>
+				<td><%= recordbook.backpoint %></td>
+        <td><%= recordbook.keeperpoint %></td>
+
+        <td>
+          <%= link_to 'Edit', edit_recordbook_path(recordbook), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', recordbook_path(recordbook), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_recordbook_path, :class => 'btn btn-primary' %>

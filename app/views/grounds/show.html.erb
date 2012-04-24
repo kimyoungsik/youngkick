@@ -1,0 +1,105 @@
+<table class="table table-striped">
+	<thead>
+	<tr>
+	  <th></th>
+		<th>제목</th>
+		<th>날짜</th>
+		<th>장소</th>
+		<th>만든이</th>
+		<th><i class="icon-user"></i>/최소인원</th>
+		<th>포메이션</th>
+		<th>모집남은시간</th>
+		<% if admin_signed_in? %>
+		<th>이긴팀</th>
+		<th>점수</th>
+		<% end %>
+	  <th></th>
+	</tr>
+	</thead>
+	<tbody>
+
+	<% if admin_signed_in? %>
+
+		<tr>
+			<td><%= best_in_place @ground, :status, type: :select, collection: [["pending", "대기"], ["progress", "진행"], ["cancel", "취소 "],["after","종료"]] %></td>
+      <td><%= link_to @ground.title, ground_path(@ground)%></td>
+			<td><%= "#{@ground.datetime.month}-#{@ground.datetime.day}"%> <i class="icon-time"></i><%= "#{@ground.datetime.hour}:#{@ground.datetime.min}" %></td>
+			<td><%= @ground.location %></td>
+			<td><%= @ground.user.email %></td>
+			<td><%= "#{@ground.participants.length}/#{@ground.limit}" %></td>
+			<td><%= "#{@ground.forwardcount}-#{@ground.midfieldcount}-#{@ground.backcount}" %></td>
+			<td><% if  Time.now-( @ground.datetime - @ground.limitday.day - 9.hours) < 0 %>
+		  			<%= time_ago_in_words(@ground.datetime - @ground.limitday.day - 9.hours) %>
+					<% end %>
+			</td>
+			<td><%= best_in_place @ground, :winner, type: :select, collection: [["a","a"],["b","b"],["tie","tie"]] %></td>
+			<td><%= best_in_place @ground, :score %></td>					
+      <td>
+        <%= link_to 'Edit', edit_ground_path(@ground), :class => 'btn btn-mini' %>
+        <%= link_to 'Destroy', ground_path(@ground), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+      </td>
+    </tr>
+	<% else %>
+	
+		<tr>
+	
+			<td><%= link_to status_in_korean(@ground.status), ground_path(@ground), :rel => "popover", :class => "btn btn-#{status_label(@ground.status)}" %></td>
+       <td><%= @ground.title%></td>
+			<td><%= "#{@ground.datetime.month}-#{@ground.datetime.day}"%> <i class="icon-time"></i><%= "#{@ground.datetime.hour}:#{@ground.datetime.min}" %></td>
+			<td><%= @ground.location %></td>
+			<td><%= @ground.user.email %></td>
+			<td><%= "#{@ground.participants.length}/#{@ground.limit}" %></td>
+			<td><%= "#{@ground.forwardcount}-#{@ground.midfieldcount}-#{@ground.backcount}" %></td>
+	
+			<td><% if  Time.now-( @ground.datetime - @ground.limitday.day - 9.hours) < 0 %>
+		  			<%= time_ago_in_words(@ground.datetime - @ground.limitday.day - 9.hours) %>
+					<% end %>
+			</td>
+       <td>
+				 <%= link_to 'Back', grounds_path, :class => 'btn btn-mini'  %>
+         <%= link_to 'Edit', edit_ground_path(@ground), :class => 'btn btn-mini' %>
+         <%= link_to 'Destroy', ground_path(@ground), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+       </td>
+     </tr>
+	
+	<% end %>
+	</tbody>
+</table>
+<p>
+  <b>내용</b><br>
+  <%= @ground.description %>
+</p>
+<!-- 대기나 종료된것은 취소여부를 나타낼 필요가 없다. -->
+<% unless @ground.status == "pending" || @ground.status == "after"%>
+	<!-- 기한이 안지났을 때 -->
+	<% if  Time.now-( @ground.datetime - @ground.limitday.day - 9.hours) < 0 %>
+		<li id="ground-participate"> 
+			<%= render 'ground_participate' %>
+		</li>
+		<!-- 기한이 지났을 떄 -->
+	<% else %>
+		<!-- 제한 인원보다 사람이 적게 들어왔을 떄 -->
+		<% if  admin_signed_in?  or (@ground.participants.length < @ground.limit && @ground.user_id == current_user.id)  %>
+			<% if @ground.status == "progress" %>
+				취소하려면 아래를 바꿔주세요 .</br>
+				<%= best_in_place @ground, :status, type: :select, collection: [["progress", "진행"], ["cancel", "취소 "]] %>
+				제한 기간을 연장 하려면 다음을 바꿔주세요 </br>
+				<%= best_in_place @ground, :limitday, type: :select, collection: [[1,"1일전"],[2,"2일전"],[3,"3일전"],[4,"4일전"],[5,"5일전"],[6,"6일전"],[7,"7일전"]] %>
+			<% else %>
+			 	취소된 Ground입니다.
+			<% end %>
+		<% else %>
+			모집날짜 초과, 등록및 결제 취소 불가
+		<% end %>
+	<% end %>
+<% end %>
+
+<div id="kit_form_a">
+<div class="well">
+<%= render 'kits/kit_form' %>
+</div>
+</div>
+<div id="kits">
+	<%= render @kits%>
+</div>
+<%= will_paginate @kits %>

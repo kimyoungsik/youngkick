@@ -1,0 +1,6 @@
+$('#kits').append('<%= j render(@kits) %>');
+<% if @kits.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate(@kits) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>

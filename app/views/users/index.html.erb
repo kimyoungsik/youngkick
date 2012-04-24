@@ -1,0 +1,34 @@
+<h1>사람들</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>email</th>
+      <th>전</th>
+      <th>승</th>
+      <th>패</th>
+      <th>무</th>
+			<th>공격포인트</th>
+			<th>미드필드포인트</th>
+			<th>수비포인트</th>
+			<th>키퍼포인트</th>
+			
+      <th>총</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>     
+			<tr>
+        <td><%= link_to user.email, user_path(user) %></td>
+        <td><%= user.record %></td>
+        <td><%= user.win %></td>
+				<td><%= user.loss %></td>
+				<td><%= user.tie %></td>
+				<td><%= user.forwardpoint %></td>
+				<td><%= user.midfieldpoint %></td>
+				<td><%= user.backpoint %></td>
+				<td><%= user.keeperpoint %></td>
+				<td><%= user.point %></td>
+      </tr>
+		<% end %>
+  </tbody>
+</table>

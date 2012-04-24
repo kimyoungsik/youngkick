@@ -1,0 +1,71 @@
+
+
+<table class="table table-striped">
+	<thead>
+	<tr>
+	  <th></th>
+		<th>제목</th>
+		<th>날짜</th>
+		<th>장소</th>
+		<th><i class="icon-user"></i>/최소인원</th>
+		<th>포메이션</th>
+		<th>모집남은시간</th>
+		<% if admin_signed_in? %>
+		<th>이긴팀</th>
+		<th>점수</th>
+		<% end %>
+	  <th></th>
+	</tr>
+	</thead>
+	<tbody>
+
+	
+	<% @grounds.each do |ground| %>
+	<!-- 대기중인것은 자기것만 보이게 -->
+    <% if (user_signed_in? && current_user.id == ground.user_id)  %>
+			<tr>
+				<td><%= link_to status_in_korean(ground.status), ground_path(ground), :rel => "popover", :class => "btn btn-#{status_label(ground.status)}" %></td>
+        <td><%= ground.title%></td>
+				<td><%= "#{ground.datetime.month}-#{ground.datetime.day}"%> <i class="icon-time"></i><%= "#{ground.datetime.hour}:#{ground.datetime.min}" %></td>
+				<td><%= ground.location %></td>
+				<td><%= "#{ground.participants.length}/#{ground.limit}" %></td>
+				<td><%= "#{ground.forwardcount}-#{ground.midfieldcount}-#{ground.backcount}" %></td>
+				<td><% if  Time.now-( ground.datetime - ground.limitday.day - 9.hours) < 0 %>
+			  			<%= time_ago_in_words(ground.datetime - ground.limitday.day - 9.hours) %>
+						<% end %>
+				</td>
+        <td>
+          <%= link_to 'Edit', edit_ground_path(ground), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', ground_path(ground), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+		
+		<% end %>
+  <% end %>
+
+
+
+	<% if user_signed_in? || admin_signed_in? %>
+		<% current_user.participations.each do |participation| %>
+			<tr>
+				<td><%= link_to status_in_korean(participation.ground.status), ground_path(participation.ground), :rel => "popover", :class => "btn btn-#{status_label(participation.ground.status)}" %></td>
+        <td><%= participation.ground.title%></td>
+				<td><%= "#{participation.ground.datetime.month}-#{participation.ground.datetime.day}"%> <i class="icon-time"></i><%= "#{participation.ground.datetime.hour}:#{participation.ground.datetime.min}" %></td>
+				<td><%= participation.ground.location %></td>
+				<td><%= "#{participation.ground.participants.length}/#{participation.ground.limit}" %></td>
+				<td><%= "#{participation.ground.forwardcount}-#{participation.ground.midfieldcount}-#{participation.ground.backcount}" %></td>
+				<td><% if  Time.now-( participation.ground.datetime - participation.ground.limitday.day - 9.hours) < 0 %>
+			  			<%= time_ago_in_words(participation.ground.datetime - participation.ground.limitday.day - 9.hours) %>
+						<% end %>
+				</td>
+        <td>
+          <%= link_to 'Edit', edit_ground_path(participation.ground), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', ground_path(participation.ground), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+	  <% end %>
+	<% end %>
+
+	
+	</tbody>
+</table>
