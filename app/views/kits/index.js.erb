@@ -4,3 +4,23 @@ $('#kits').append('<%= j render(@kits) %>');
 <% else %>
   $('.pagination').remove();
 <% end %>
+
+$(document).ready(function() {
+	// comment form
+	$(".comment-field textarea").watermark('댓글을 달아주세요.');
+
+	$(".comment-button-box").hide();
+	$(".comment-field > .item-left > img").hide();
+
+	$(".new_comment").click(function(event){
+		$(this).children(".comment-button-box").show();
+		$(this).children(".comment-textarea").css("background", "#fff");
+		$(this).parent().prev().children().show();
+	});
+	$("a.comment-cancel").click(function(){
+		$(this).parent().hide();
+		$(this).parent().parent().parent(".item-content").siblings().children("img").hide();
+		$(this).parent().siblings(".comment-textarea").css("background", "#fafafa");
+		return false;
+	});
+});

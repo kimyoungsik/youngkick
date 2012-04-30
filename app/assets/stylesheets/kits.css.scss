@@ -1,3 +1,94 @@
-// Place all the styles related to the Kits controller here.
+// Place all the styles related to the kits controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "mixin";
+
+#fade {
+	display: none; 
+	background: #000;
+	position: fixed; left: 0; top: 0;
+	width: 100%; height: 100%;
+	opacity: .80;
+	z-index: 9999;
+}
+.popup_block{
+	text-align: center;
+	display: none; 
+	background: #222;
+	padding: 6px 20px 20px;
+	position: fixed;
+	top: 50%; 
+	left: 50%;
+	z-index: 99999;
+	@include rounded-corners(10px);
+	a.close{
+		position: absolute;
+		right: 12px;
+	}
+	.popup-count{
+		@include subtext-style;
+	}
+	.popup-photo{
+		margin-top: 5px;
+	}
+}
+
+/* popup arrow */
+.popup-prev, .popup-next{
+	position: absolute;
+	line-height: 18px;
+	a{
+		height: 32px;
+		width: 16px;
+		display: block;
+	}
+}
+.popup-prev{
+	top: 5px;
+	left: 0px;	
+	a{
+		background: url('/assets/selector.png') no-repeat 0px -79px;
+		margin-left: 12px;
+	}
+	a:hover{
+		background-position: -16px -79px;
+	}
+}
+.popup-next{
+	top: 5px;
+	right: 0px;
+	a{
+		background: url('/assets/selector.png') no-repeat 0px -111px;
+		margin-right: 12px;
+	}
+	a:hover{
+		background-position: -16px -111px;
+	}
+}
+
+*html #fade {
+	position: absolute;
+}
+*html .popup_block {
+	position: absolute;
+}
+
+
+/* kit images */
+.kit-item .kit-images{
+	margin-top: 5px;
+	
+	.image-item{
+		display: inline-block;
+		img{
+/*			@include image;*/
+/*			@include rounded-corners(10px);*/
+			margin-right: 5px;
+		}
+	}
+	.image-more{
+		a{
+			display: block;
+		}
+	}
+}

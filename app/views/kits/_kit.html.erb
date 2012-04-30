@@ -3,13 +3,56 @@
 		<%= link_to "X", kit, :confirm => "정말로 삭제하시겠습니까?", :method => :delete, :remote => true, :id => "kit-delete" %>
 	</div>
 <% end %>
+
 <div class="item-box kit-item">
+	<div class="item-left">
+		<%= profile_photo(kit.user, :small, 60) %>
+	</div>
 	<div class="item-content">
 		<div class="item-content-top">
-			<p>
+			<h2>
 				<%= link_to kit.user.email, kit.user %>
-			</p>
-			<p><%= auto_link(kit.content.gsub(/\n/, "<br />").html_safe) %></p>
+			</h2>
+
 		</div>
-	</div>
+		<!-- Kit Photo -->
+		<% if kit.photos.any? %>
+			<% count = 0 %>
+
+			<div class="kit-images">
+				<% kit.photos.each do |photo| %>
+					<% if count < 4 %>
+						<div class="image-item">
+							<%= link_to image_tag(photo.image.url(:small)), "#?w=700", :rel => "popup_name_#{kit.id}_#{count}", :class => "poplight" %>
+						</div>
+					<% end %>
+					<div id="popup_name_<%= kit.id %>_<%= count %>" class="popup_block"> 
+						<div class="popup-count"> 총 <%= kit.photos.count %>개의 이미지 중 <%= count + 1 %>번째</div>
+						<% unless count == 0 %>
+							<div class="popup-prev"><%= link_to "", "#?w=700", :rel => "popup_name_#{kit.id}_#{count-1}", :class => "poplight_next" %></div>
+						<% end %>
+
+						<% if count == (kit.photos.count - 1) %>
+							<div class="popup-photo"><%= image_tag photo.image.url(:large) %></div>
+						<% else %>
+							<div class="popup-next"><%= link_to "", "#?w=700", :rel => "popup_name_#{kit.id}_#{count+1}", :class => "poplight_next" %></div>
+							<div class="popup-photo"><%= link_to image_tag(photo.image.url(:large)), "#?w=700", :rel => "popup_name_#{kit.id}_#{count+1}", :class => "poplight_next" %></div>
+
+							<div class="end"></div>
+						<% end %>
+					</div>
+					<% count += 1%>
+				<% end %>
+				<% if kit.photos.count > 3 %>
+					<span class="image-more">
+					<%= link_to "#{kit.photos.count}장의 이미지 모두 보기", "#?w=700", :rel => "popup_name_#{kit.id}_0", :class => "poplight" %>
+					</span>
+				<% end %>
+			</div>
+			<div class="end"></div>
+
+		<% end %>
+		<p><%= auto_link(kit.content.gsub(/\n/, "<br />").html_safe) %></p>
+		<div class="clear"></div>
+	</div>		
 </div>

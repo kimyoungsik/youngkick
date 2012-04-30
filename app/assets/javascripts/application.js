@@ -38,3 +38,116 @@ $('a[data-toggle="tab"]').on('shown', function (e) {
   e.target // activated tab
   e.relatedTarget // previous tab
 })
+
+
+// JQuery Popup, 20110330, Hasang Cheon
+$(document).ready(function() {
+	//When you click on a link with class of poplight and the href starts with a #
+	$('a.poplight[href^=#]').live("click", function() {
+
+		var popID = $(this).attr('rel'); //Get Popup Name
+		var popURL = $(this).attr('href'); //Get Popup href to define size
+
+		//Pull Query & Variables from href URL
+		var query= popURL.split('?');
+		var dim= query[1].split('&');
+		var popWidth = dim[0].split('=')[1]; //Gets the first query string value
+
+		//Fade in the Popup and add close button
+		$('#' + popID).fadeIn().css({ 'width': Number( popWidth ) }).prepend('<a href="#" class="close"><img src="/assets/popup_selector.png" title="Close Window" alt="Close" /></a>');
+
+		//Define margin for center alignment (vertical   horizontal) - we add 80px to the height/width to accomodate for the padding  and border width defined in the css
+		var popMargTop = ($('#' + popID).height() + 80) / 2;
+		var popMargLeft = ($('#' + popID).width() + 80) / 2;
+		
+		//Apply Margin to Popup
+		$('#' + popID).css({
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+		
+		$(".popup-prev, .popup-next").each(function(){
+			$(this).css("top", ($('#' + popID).height()-$(this).height())/ 2 + "px");
+		});
+		
+
+		//Fade in Background
+		$('body').append('<div id="fade"></div>'); //Add the fade layer to bottom of the body tag.
+		$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn(); //Fade in the fade layer - .css({'filter' : 'alpha(opacity=80)'}) is used to fix the IE Bug on fading transparencies 
+
+		return false;
+	});
+	
+	$('a.poplight_next[href^=#]').live("click", function() {
+
+		$('.popup_block').hide();		
+
+		var popID = $(this).attr('rel'); //Get Popup Name
+		var popURL = $(this).attr('href'); //Get Popup href to define size
+
+		//Pull Query & Variables from href URL
+		var query= popURL.split('?');
+		var dim= query[1].split('&');
+		var popWidth = dim[0].split('=')[1]; //Gets the first query string value
+
+		//Fade in the Popup and add close button
+		$('#' + popID).fadeIn().css({ 'width': Number( popWidth ) }).prepend('<a href="#" class="close"><img src="/assets/popup_selector.png" class="btn_close" title="Close Window" alt="Close" /></a>');
+
+		//Define margin for center alignment (vertical   horizontal) - we add 80px to the height/width to accomodate for the padding  and border width defined in the css
+		var popMargTop = ($('#' + popID).height() + 80) / 2;
+		var popMargLeft = ($('#' + popID).width() + 80) / 2;
+
+		//Apply Margin to Popup
+		$('#' + popID).css({
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+		
+		$(".popup-prev, .popup-next").each(function(){
+			$(this).css("top", ($('#' + popID).height()-$(this).height())/ 2 + "px");
+		});
+
+		return false;
+	});
+	
+
+	//Close Popups and Fade Layer
+	$('a.close, #fade').live('click', function() { //When clicking on the close or fade layer...
+		$('#fade , .popup_block').fadeOut(function() {
+			$('#fade, a.close').remove();  //fade them both out
+		});
+		return false;
+	});
+	$(".popup_block").hover(function(){
+		$(".popup-prev, .popup-next").fadeIn();
+	}, function(){
+		$(".popup-prev, .popup-next").fadeOut();		
+	});
+});
+
+// Kit Ajax if no photo is attached
+$(document).ready(function() {
+	$("form#new_kit").submit(function() {
+		if ($("input#kit_photos_attributes__image").val() == "")
+		{
+			var i = $(this).find("input[type=submit]");
+			if ($("textarea#kit-form-text").val() == "")
+				return false;
+			var t =  i.attr("data-disable-with");
+			if (t != null && t != "")
+				i.val(t);
+			i.attr("disabled", "disabled");
+			$.post(this.action, $(this).serialize(), null, "script")
+			.complete(function(){
+				i.removeAttr("disabled");
+				i.val("Kit");
+			})
+			.error(function(){
+				i.val("Kit");
+			});
+			return false;
+		}
+		return true;
+	});
+});
+

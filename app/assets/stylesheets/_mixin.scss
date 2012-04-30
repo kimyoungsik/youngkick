@@ -1,0 +1,448 @@
+/* font */
+@font-face{
+	font-family:'NanumGothicWeb'; 
+	font-style:normal; 
+	font-weight:400; 
+	src: url('/fonts/NanumGothicCompact.woff') format('woff');
+}
+@font-face{ 
+	font-family:'LexiSaebomRWeb'; 
+	font-style:normal; 
+	font-weight:400; 
+	src: url('/fonts/LexiSaebomRCompact.woff') format('woff');
+}
+
+/* text-style */
+@mixin text-style1{
+	font-family: 'NanumgothicWeb', Helvetica, Arial, sans-serif;	
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 18px;
+	text-align: left;		
+	word-wrap: break-word;
+}
+@mixin text-style2{
+	font-family: 'NanumgothicWeb', Helvetica, Arial, sans-serif;	
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: left;		
+	word-wrap: break-word;
+}
+@mixin headline-style{
+	font-family: 'LexiSaebomRWeb', Georgia, "Times New Roman", Times, serif;	
+	font-weight: normal;
+	text-align: left;
+	/* font-style: italic; */
+	word-wrap: break-word;	
+}
+@mixin subtext-style{
+	font-family: 'NanumgothicWeb', Helvetica, Arial, sans-serif;	
+	font-weight: normal;
+	font-size: 11px;
+	line-height: 16px;
+	color: $gray-color3;
+}
+@mixin english-style{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: italic;
+}
+@mixin digit-style{
+	font-family: Helvetica, Arial, sans-serif;	
+	font-weight: bold;
+	font-size: 48px;
+	line-height: 48px;
+	color: #ccc;
+}
+@mixin ie-style{
+	font-family: '나눔고딕', NanumgothicOTF, 'NanumgothicWeb', Helvetica, Arial, sans-serif;
+}
+/* border-radius */
+@mixin rounded-corners($radius){  
+  border-radius: $radius;  
+  -moz-border-radius: $radius;  
+  -webkit-border-radius: $radius; 
+	overflow: hidden;
+}
+@mixin top-radius($radius){
+	border-top-left-radius: $radius;
+	border-top-right-radius: $radius;
+	-webkit-border-top-left-radius: $radius;		
+	-webkit-border-top-right-radius: $radius;
+	-moz-border-radius-topleft: $radius;
+	-moz-border-radius-topright: $radius;
+}
+@mixin bottom-radius($radius){
+	border-bottom-left-radius: $radius;
+	border-bottom-right-radius: $radius;
+	-webkit-border-bottom-left-radius: $radius;		
+	-webkit-border-bottom-right-radius: $radius;	
+	-moz-border-radius-bottomleft: $radius;
+	-moz-border-radius-bottomright: $radius;
+}
+@mixin top-left-radius($radius){
+	border-top-left-radius: $radius;
+	-webkit-border-top-left-radius: $radius;		
+	-moz-border-radius-topleft: $radius;	
+}
+@mixin top-right-radius($radius){
+	border-top-right-radius: $radius;
+	-webkit-border-top-right-radius: $radius;		
+	-moz-border-radius-topright: $radius;	
+}
+@mixin bottom-left-radius($radius){
+	border-bottom-left-radius: $radius;
+	-webkit-border-bottom-left-radius: $radius;		
+	-moz-border-radius-bottomleft: $radius;	
+}
+@mixin bottom-right-radius($radius){
+	border-bottom-right-radius: $radius;
+	-webkit-border-bottom-right-radius: $radius;		
+	-moz-border-radius-bottomright: $radius;	
+}
+
+@mixin box-shadow($shadow){
+	box-shadow: $shadow;
+	-webkit-box-shadow: $shadow;
+	-moz-box-shadow: $shadow;
+}
+@mixin ellipsis{
+	overflow: hidden;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+@mixin box-sizing{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;	
+}
+@mixin selection{
+	background: $main-color; 
+	color: $white-color; 
+	text-shadow: none;
+	text-decoration: none;
+}
+@mixin transition{
+	transition: all 400ms ease-in-out;
+	-webkit-transition: all 400ms ease-in-out;
+	-moz-transition: all 400ms ease-in-out;
+	-o-transition: all 400ms ease-in-out;
+}
+@mixin pre-wrap{
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+}
+@mixin a-link{
+	text-decoration: none;
+	color: $text-color;
+}
+
+/* image */
+@mixin square-size($size){
+	width: $size;
+	height: $size;	
+}
+@mixin image{
+	@include box-sizing;
+	@include box-shadow(0 1px 5px rgba(0,0,0,.46));
+/*	background: #fff;*/
+/*	padding: 5px;*/
+/*	@include box-shadow(0 2px 2px #ddd);*/
+}
+@mixin image70{
+	@include square-size(70px);
+	@include rounded-corners(7px);
+}
+@mixin image60{
+	@include square-size(60px);
+	@include rounded-corners(6px);
+}
+@mixin image40{
+	@include square-size(40px);
+	@include rounded-corners(4px);
+}
+@mixin image30{
+	@include square-size(30px);
+	@include rounded-corners(3px);
+}
+@mixin item-box{
+	width: 100%;
+	padding: 10px 20px;	
+	@include box-sizing;
+}
+@mixin sidebar-item-box{
+	width: 100%;
+	padding: 5px 20px;
+	@include box-sizing;	
+}
+
+/* textarea & text input */
+@mixin textarea{
+	@include text-style1;
+	@include rounded-corners(5px);
+	@include pre-wrap;
+	@include box-sizing;
+	border: $border;
+	width: 100%;
+	padding: 5px;
+	resize: vertical;
+}
+@mixin text-input{
+	@include rounded-corners(5px);
+	@include pre-wrap;
+	@include box-sizing;
+	border: $border;
+	width: 100%;
+	padding: 5px;
+	resize: none;
+}
+@mixin textarea-style{
+	@include box-shadow(0 1px 0 #fff);
+	@include box-shadow(inset 0 1px 3px rgba(0,0,0,.05));
+}
+
+/* button */
+@mixin button-style1{
+	@include text-style2;
+/*	font-weight: bold;*/
+	text-align: center;
+	@include rounded-corners(5px);
+	@include box-sizing;
+/*	@include transition;	*/
+	padding: 0 12px;
+	height: 28px;
+	border: 0;
+	background: $main-color;
+	color: $white-color;
+	cursor: pointer;	
+	overflow: visible; /*firefox*/
+/*	@include box-shadow(0 1px 2px #fff);*/	
+}
+@mixin hover-button-style1{
+	background: $sub-color;
+}
+@mixin button-style2{
+	@include button-style1;
+	font-weight: normal;
+	height: 26px;
+	font-size: 12px;
+	line-height: 26px;
+	overflow: visible; /*firefox*/
+}
+@mixin cancel-button-style{
+	@include button-style2;
+	background: #777;
+}
+
+/* top button */
+@mixin button-style3{
+	background: $main-color;
+	border: 1px solid #000;
+	@include rounded-corners(3px);
+	@include box-shadow(0 1px 1px #999);
+	@include text-style1;
+	padding: 0 10px;
+	vertical-align: middle;
+	cursor: pointer;
+	color: $white-color;	
+	overflow: visible; /*firefox*/
+}
+@mixin hover-button-style3{
+	background: $sub-color;
+	@include box-shadow(inset 0 0 0);	
+/*	color: $white-color;*/
+}
+@mixin active-button-style3{
+	@include box-shadow(inset 0 1px 2px #444);
+}
+
+/* friend button */
+@mixin button-style4{
+	@include text-style1;
+	text-align: center;
+	line-height: 24px;
+	border: $border;
+	@include box-sizing;
+	@include rounded-corners(5px);
+	@include box-shadow(0 1px 2px #fff);
+	vertical-align: middle;
+	background: transparent;
+	color: $subtext-color;
+	width: 80px;
+	height: 26px;
+	cursor: pointer;
+	overflow: visible; /*firefox*/	
+}
+@mixin hover-button-style4{
+	border: 1px solid #039FD3;
+	background: $main-color;
+	color: $white-color;
+	@include box-shadow(0 0 0);	
+}
+@mixin active-button-style4{
+	border: 1px solid #444;
+	background: $sub-color;
+}
+
+/* seed-participation button */
+@mixin button-style5{
+	@include button-style4;
+	border: 1px solid #ccc;
+}
+@mixin hover-button-style5{
+	background: #f4f4f4;
+	@include box-shadow(0 1px 1px #e5e5e5);
+}
+@mixin active-button-style5{
+   border-bottom-color: #CCC;
+   -webkit-box-shadow: inset 0 1px 2px #ddd;
+   -moz-box-shadow:    inset 0 1px 2px #ddd;
+   box-shadow:         inset 0 1px 2px #ddd;
+   background: #e6e6e6;
+}
+@mixin button-style6{
+	@include button-style4;
+	border: 1px solid #ccc;
+}
+@mixin hover-button-style6{
+	background: $sub-color;
+	border: 1px solid #444;
+	color: #fff;
+/*	@include box-shadow(0 1px 1px #e5e5e5);*/
+}
+@mixin active-button-style6{
+	background: $sub-color;
+	border: 1px solid #444;
+/*	@include box-shadow(0 0px 10px #aaa);*/
+}
+
+/* search input */
+@mixin search-style1{
+	display: block;
+	width: 150px;
+	height: 22px;
+	padding-left: 24px;
+	@include text-style1;
+	background: #777;
+	border: 0;
+	@include rounded-corners(12px);
+	@include box-sizing;
+	margin: 4px auto;
+	@include transition;
+	@include box-shadow(inset 0 0 3px rgba(0,0,0,.2));
+	line-height: 12px;
+}
+@mixin search-style2{
+	display: block;
+	height: 28px;
+	padding: 6px 13px 6px 24px;
+	@include text-style1;
+	@include rounded-corners(12px);
+	@include box-sizing;
+	margin: 4px auto;
+	width: 100%;
+	background: $white-color;
+	border: 1px solid #ddd;
+	@include box-shadow(inset 0 0 3px rgba(0,0,0,.1));
+	line-height: 12px;
+}
+
+/* icon */
+@mixin selector-icon{
+	background: url("/assets/selector.png") 0px 0px no-repeat;
+	float: right;
+	height: 20px;
+	width: 9px;
+	right: -35px;
+	top: 30px;
+	position: relative;
+}
+@mixin delete-icon{
+	width: 9px;
+	height: 9px;
+	display: inline-block;
+	background: url("/assets/selector.png") -9px 0 no-repeat;
+}
+@mixin delete-icon-hover{
+	background-position: -18px 0;
+}
+@mixin search-icon{
+	background: url("/assets/selector.png") -9px -26px no-repeat;
+	position: absolute;
+	width: 12px;
+	height: 14px;
+	display: inline-block;
+}
+
+/* popup box */
+@mixin popup-box{
+	height: 450px;
+	width: 400px;
+	position: absolute;
+	left: auto;
+	right: auto;
+	margin: 0 auto;
+	@include rounded-corners(20px);
+	@include box-shadow(0 0 10px rgba(0,0,0,.5));
+	@include box-sizing;
+	z-index: 100;
+}
+@mixin tutorial-button{
+	height: 39px;
+	width: 46px;
+	position: absolute;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+}
+
+/* theme */
+$main-color: #039FD3;
+$sub-color: #444;
+$headline-color: #000;
+$text-color: #444;
+$subtext-color: #777;
+$hover-color: lighten($sub-color, 50%);
+$active-color: lighten($main-color, 50%);
+$active-box-color:rgba(255, 255, 255, .7);
+
+
+/*layout-design-sample1*/
+/*$background-color: #ddd url("/assets/bg-main.png") fixed;*/
+/*$main-box-color: #f2f2f2;*/
+/*$sub-box-color: #e8e8e8;*/
+/*$border: 1px solid rgba(0, 0, 0, .1);*/
+
+/*layout-design-sample2*/
+/*$background-color: #EDECE9;*/
+$background-color: #2d4963;
+$main-box-color: #fff;
+$mentor-box-color: #E9EDF4;
+$sub-box-color: #f6f6f6;
+$sidebar-box-color: #f9f9f9;
+$header-box-color: #355777;
+$box-border: 0;
+$border: 1px solid #ddd;
+
+$tag-level4: lighten($header-box-color, 30%);
+$tag-level3: lighten($header-box-color, 5%);
+$tag-level2: lighten($header-box-color, 20%);
+$tag-level1: lighten($header-box-color, 10%);
+
+/*layout-design-sample3*/
+/*$background-color: #E7E7DE;	
+$main-box-color: #fff;
+$sub-box-color: #FAF9F6;*/
+/*$sub-box-color: #EFEFEF;*/
+/*$border: 1px solid #ddd;*/
+
+$white-color: #fff;
+$gray-color1: #f7f7f7;
+$gray-color2: #eee;
+$gray-color3: #aaa;
+
+$number-font: helvetica, arial, sans-serif;

@@ -1,4 +1,41 @@
-// /* Add the new kit to the bottom of the kits list */
-// $("#kits").prepend("<%= escape_javascript(render(@kit)) %>");
-// /* Reset the kit form */
-// $("#new_kit")[0].reset();
+/* Add the new kit to the bottom of the kits list */
+$("#kits").prepend("<%= escape_javascript(render(@kit)) %>");
+
+/* Highlight the new kit */
+$("#kit_<%= @kit.id %>").effect("highlight", {}, 3000);
+
+/* Reset the kit form */
+$("#new_kit")[0].reset();
+
+$(document).ready(function() {
+	// kit form 
+	$("#kit-field textarea").watermark('새로운 Kit을 입력해주십시오.');
+
+	// comment form
+	$(".comment-field textarea").watermark('댓글을 달아주세요.');
+
+	$(".comment-button-box").hide();
+	$(".comment-field > .item-left > img").hide();
+
+	$(".new_comment").click(function(event){
+		$(this).children(".comment-button-box").show();
+		$(this).children(".comment-textarea").css("background", "#fff");
+		$(this).parent().prev().children().show();
+	});
+	$("a.comment-cancel").click(function(){
+		$(this).parent().hide();
+		$(this).parent().parent().parent(".item-content").siblings().children("img").hide();
+		$(this).parent().siblings(".comment-textarea").css("background", "#fafafa");
+		return false;
+	});
+	
+	// enter key for comment
+	$("textarea.comment-textarea").bind("keypress", function(e){
+		var code = e.keyCode ? e.keyCode : e.which;
+		if(code == 13){
+			$(this).blur();
+			$(this).siblings().children(".comment-submit").focus().click();
+			e.preventDefault();
+		}
+  });
+});

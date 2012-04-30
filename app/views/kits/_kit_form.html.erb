@@ -1,12 +1,20 @@
 <% if user_signed_in? %>
- <div class="item-content">
+<div class="main-box" id="kit-field">
+	<div class="item-left">
+		<%= profile_photo(current_user, :small, 60) %>
+	</div>
+	<div class="item-content">
 		<%= form_for @kit, :validate => true , :html => { :multipart => true } do |f| %>
 			<%= f.text_area :content %>
 			<%= f.hidden_field :kitable_id %>
 			<%= f.hidden_field :kitable_type %>
 		<div id="kit-button-box">
+			<div id="photo-selector"><span id="photo-text">이미지 올리기</span>
+				<%= file_field_tag 'kit[photos_attributes][][image]', :multiple => true %>
+			</div>
 		<%= f.submit "Kit", :class => "kit-submit" %>
 		</div>
 		<% end %>
-	</div> 
+	</div>
+</div> 
 <% end %>

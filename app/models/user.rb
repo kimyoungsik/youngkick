@@ -48,6 +48,9 @@ class User < ActiveRecord::Base
                     :password => Devise.friendly_token[0,20]) 
     end
   end
+  def korean_full_name
+    last_name+first_name
+  end
   
   def full_name
     first_name + " " + last_name
