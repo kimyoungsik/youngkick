@@ -1,6 +1,10 @@
 Youngkick::Application.routes.draw do
   
 
+  get "gettingstarted/update"
+
+  get "gettingstarted/step1"
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   devise_for :admins, :path_prefix => 'd'
@@ -23,6 +27,7 @@ Youngkick::Application.routes.draw do
     resources :photos
     get :autocomplete_network_name, :on => :collection  
   end
+  resources :gettingstarted
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

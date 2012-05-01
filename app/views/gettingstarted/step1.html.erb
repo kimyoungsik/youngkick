@@ -1,0 +1,15 @@
+<div class = "well">
+	<div>
+		<%= simple_form_for(current_user, :as => :user, :url => gettingstarted_path(current_user)) do |f| %>
+			<%= f.input :last_name,:label => '성' %>
+			<%= f.input :first_name,:label => '이름' %>
+			
+			<%= f.input :favorite_player,:label => '좋아하는 축구선수' %>
+			<%= f.input :favorite_club,:label => '좋아하는 축구 클럽' %>
+			<%= f.input :team_name,:label => '소속팀' %>
+			<%= f.input :foot, :label => '주로사용하는 발' %>
+			<%= f.input :address, :label => '활동 지역' %>
+			<%= f.submit %>
+		<% end %>
+	</div>
+</div>

@@ -2,13 +2,13 @@
 	<li class="well">
 		총점수가 가장 높음
 		<%= profile_photo(@users.first, :small, 60) %>
-		<%= @users.first.email %>
+		<%= @users.first.korean_full_name %>
 		<%= @users.first.point%>				
 	</li>
 	<li class="well">
 		총점수가 가장 높음
 		<%= profile_photo(@users.first, :small, 60) %>
-		<%= @users.first.email %>
+		<%= @users.first.korean_full_name %>
 		<%= @users.first.point%>				
 	</li>
 	
@@ -18,7 +18,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>email</th>
+      <th>이름</th>
       <th>전</th>
       <th>승</th>
       <th>패</th>
@@ -35,7 +35,7 @@
   <tbody>
     <% @users.each do |user| %>     
 			<tr>
-        <td><%= link_to user.email, user_path(user) %></td>
+        <td><%= link_to user.korean_full_name, user_path(user) %></td>
         <td><%= user.record %></td>
         <td><%= user.win %></td>
 				<td><%= user.loss %></td>

@@ -1,7 +1,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>email</th>
+			<th></th>
+			<th>이름</th>
       <th>전</th>
       <th>승</th>
       <th>패</th>
@@ -10,15 +11,20 @@
 			<th>미드필드포인트</th>
 			<th>수비포인트</th>
 			<th>키퍼포인트</th>
-			
       <th>총</th>
 			<th>레벨</th>
+			<th>좋아하는 축구선수</th>
+			<th>좋아하는 축구 클럽</th>
+			<th>소속팀</th>
+      <th>주로사용하는 발</th>
+			<th>활동 지역</th>
     </tr>
   </thead>
   <tbody>
     
 			<tr>
-        <td><%= link_to @user.email, user_path(@user) %></td>
+				<td><%= profile_photo(@user, :small, 60) %></td>
+				<td><%= @user.korean_full_name %></td>   
         <td><%= @user.record %></td>
         <td><%= @user.win %></td>
 				<td><%= @user.loss %></td>
@@ -29,12 +35,24 @@
 				<td><%= @user.keeperpoint %></td>
 				<td><%= @user.point %></td>
 				<td><%= @user.level %></td>
+				<% if current_user == @user %>
+				<td><%= best_in_place @user, :favorite_player %></td>
+				<td><%= best_in_place @user, :favorite_club %></td>
+				<td><%= best_in_place @user, :team_name %></td>
+				<td><%= best_in_place @user, :foot %></td>
+				<td><%= best_in_place @user, :address %></td>
+				<% else %>					
+					<td><%= @user.favorite_player %></td>
+					<td><%= @user.favorite_club %></td>
+					<td><%= @user.team_name %></td>
+					<td><%= @user.foot %></td>
+					<td><%= @user.address %></td>
+				<% end %>
       </tr>
 		
   </tbody>
 </table>
 
-<%= profile_photo(@user, :small, 60) %>
-<%= link_to "프로필 사진", new_user_photo_path(@user) %>
 
+<%= link_to "프로필 사진", new_user_photo_path(@user) %>
 

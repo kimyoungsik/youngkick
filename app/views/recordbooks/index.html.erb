@@ -22,7 +22,7 @@
 				<% if admin_signed_in? or recordbook.user == current_user %>
 					<% ground = Ground.find(recordbook.ground_id) %>
 	        <td><%= link_to ground.datetime.strftime("%Y년%m월%d일 %H:%M"), ground_path(ground)%></td>
-					<td><%= recordbook.user.email %></td>
+					<td><%= recordbook.user.korean_full_name %></td>
 	        <td><%= Position.find_by_id(recordbook.position_id).name %></td>
 	        <td><%= ground.score %></td>
 	        <td><%= getResult(recordbook) %></td>

@@ -1,6 +1,5 @@
 <% if user_signed_in? || admin_signed_in? %>
 	
-
 	<ul id = "team_select">
 		<li class="well">
 			<table class="table table-striped">
@@ -19,7 +18,7 @@
 						<tr>
 							<td><%= Team.find(player.team_id).name %></td>
 							<td><%= Position.find(player.position_id).name %></td>
-							<td><%= link_to profile_photo(player.user, :small, 20), user_path(player.user) %></td>
+							<td><%= link_to profile_photo(player.user, :small, 20), user_path(player.user) %><%= " "%><%= player.user.korean_full_name %></td>
 							
 						</tr>
 						<% end %>

@@ -45,13 +45,13 @@ function update_crop(coords){
 	</div>
 	<div class="item-box crop-box">
 		<div id="jcrop_main">
-			<%= image_tag(@photo.image.url(:original), :alt => current_user.email, :id => "cropbox", :width => 580) %>
+			<%= image_tag(@photo.image.url(:original), :alt => current_user.korean_full_name, :id => "cropbox", :width => 580) %>
 		</div>
 	</div>
 		
 	<div class="item-box crop-box">
 		<div id="jcrop_preview">
-			<%= image_tag(@photo.image.url(:original), :alt => "#{current_user.email} preview", :id => "preview") %>
+			<%= image_tag(@photo.image.url(:original), :alt => "#{current_user.korean_full_name} preview", :id => "preview") %>
 		</div>
 		<div id="crop-text">
 			<div>위 이미지에 해당 부분을 드래그하여</div> 

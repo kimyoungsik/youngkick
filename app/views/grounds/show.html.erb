@@ -25,7 +25,7 @@
       <td><%= link_to @ground.title, ground_path(@ground)%></td>
 			<td><%= "#{@ground.datetime.month}-#{@ground.datetime.day}"%> <i class="icon-time"></i><%= "#{@ground.datetime.hour}:#{@ground.datetime.min}" %></td>
 			<td><%= @ground.location %></td>
-			<td><%= @ground.user.email %></td>
+			<td><%= @ground.user.korean_full_name %></td>
 			<td><%= "#{@ground.participants.length}/#{@ground.limit}" %></td>
 			<td><%= "#{@ground.forwardcount}-#{@ground.midfieldcount}-#{@ground.backcount}" %></td>
 			<td><% if  Time.now-( @ground.datetime - @ground.limitday.day - 9.hours) < 0 %>
@@ -47,7 +47,7 @@
        <td><%= @ground.title%></td>
 			<td><%= "#{@ground.datetime.month}-#{@ground.datetime.day}"%> <i class="icon-time"></i><%= "#{@ground.datetime.hour}:#{@ground.datetime.min}" %></td>
 			<td><%= @ground.location %></td>
-			<td><%= @ground.user.email %></td>
+			<td><%= @ground.user.korean_full_name %></td>
 			<td><%= "#{@ground.participants.length}/#{@ground.limit}" %></td>
 			<td><%= "#{@ground.forwardcount}-#{@ground.midfieldcount}-#{@ground.backcount}" %></td>
 	
