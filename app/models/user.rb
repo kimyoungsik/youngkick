@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   attr_accessor :avatar_url 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :birthday, :gender, :facebook_uid, :facebook_token, :point ,:record, :win, :loss, :tie,:forwardpoint, :midfieldpoint, :backpoint, :keeperpoint
+  
   has_many :grounds, :dependent => :destroy
   has_many :participations, :dependent => :destroy
   has_many :recordbooks, :dependent => :destroy

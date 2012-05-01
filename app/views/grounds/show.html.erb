@@ -65,10 +65,12 @@
 	<% end %>
 	</tbody>
 </table>
+<div class = "well">
 <p>
-  <b>내용</b><br>
+  <b>세부사항</b><br>
   <%= @ground.description %>
 </p>
+</div >
 <!-- 대기나 종료된것은 취소여부를 나타낼 필요가 없다. -->
 <% unless @ground.status == "pending" || @ground.status == "after"%>
 	<!-- 기한이 안지났을 때 -->
@@ -93,7 +95,10 @@
 		<% end %>
 	<% end %>
 <% end %>
-
+<div class= "well">
+장소사진
+<%= image_tag @ground.photo.url(:original, false) %>
+</div>
 <div id="kit_form_a">
 <div class="well">
 <%= render 'kits/kit_form' %>

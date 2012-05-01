@@ -208,6 +208,10 @@ respond_to :html, :json
    end
     
   
+  def set_level(point)
+    case point
+    when 0 <= point < 10
+ 
   
   
 end
