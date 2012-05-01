@@ -1,4 +1,6 @@
 class RecordbooksController < ApplicationController
+  before_filter :admin_approved, :only => [:new, :edit, :update, :destroy, :show]
+  before_filter :authenticate_user!
   # GET /recordbooks
   # GET /recordbooks.json
   def index
@@ -86,6 +88,12 @@ class RecordbooksController < ApplicationController
   
   private
   
+  def admin_approved
+     if !admin_signed_in?
+       redirect_to root_path
+     end
+   end
+   
   def updateUserRecord(user)
     win = 0
     loss = 0

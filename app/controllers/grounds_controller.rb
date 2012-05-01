@@ -1,5 +1,5 @@
 class GroundsController < ApplicationController
-skip_before_filter :authenticate_user!, :only => [:index]
+before_filter :authenticate_user!, :except => [:index]
 before_filter :authorized_user, :only => [:destroy, :edit, :update]
 respond_to :html, :json
   # GET /grounds

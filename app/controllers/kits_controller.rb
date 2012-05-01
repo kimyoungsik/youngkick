@@ -1,4 +1,5 @@
 class KitsController < ApplicationController
+  before_filter :authenticate_user!
   def index
     if user_signed_in?
       @kit = current_user.authored_kits.build

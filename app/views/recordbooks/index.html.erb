@@ -1,5 +1,5 @@
-<h1>Recordbooks</h1>
-<table id = "recordbooks" class="display" >
+<h1>기록</h1>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>날짜</th>
@@ -11,31 +11,36 @@
       <th>미드포인트</th>
       <th>수비포인트</th>
       <th>키퍼포인트</th>
-
-      <th>Actions</th>
+			<% if admin_signed_in? %>
+      	<th>Actions</th>
+			<% end %>
     </tr>
   </thead>
   <tbody>
     <% @recordbooks.each do |recordbook| %>
       <tr>
-				<% ground = Ground.find(recordbook.ground_id) %>
-        <td><%= link_to ground.datetime, ground_path(ground)%></td>
-				<td><%= recordbook.user.email %></td>
-        <td><%= Position.find_by_id(recordbook.position_id).name %></td>
-        <td><%= ground.score %></td>
-        <td><%= getResult(recordbook) %></td>
-				<td><%= recordbook.forwardpoint %></td>
-        <td><%= recordbook.midfieldpoint %></td>
-				<td><%= recordbook.backpoint %></td>
-        <td><%= recordbook.keeperpoint %></td>
-
-        <td>
-          <%= link_to 'Edit', edit_recordbook_path(recordbook), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', recordbook_path(recordbook), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-        </td>
+				<% if admin_signed_in? or recordbook.user == current_user %>
+					<% ground = Ground.find(recordbook.ground_id) %>
+	        <td><%= link_to ground.datetime.strftime("%Y년%m월%d일 %H:%M"), ground_path(ground)%></td>
+					<td><%= recordbook.user.email %></td>
+	        <td><%= Position.find_by_id(recordbook.position_id).name %></td>
+	        <td><%= ground.score %></td>
+	        <td><%= getResult(recordbook) %></td>
+					<td><%= recordbook.forwardpoint %></td>
+	        <td><%= recordbook.midfieldpoint %></td>
+					<td><%= recordbook.backpoint %></td>
+	        <td><%= recordbook.keeperpoint %></td>
+					<% if admin_signed_in? %>
+		        <td>
+		          <%= link_to 'Edit', edit_recordbook_path(recordbook), :class => 'btn btn-mini' %>
+		          <%= link_to 'Destroy', recordbook_path(recordbook), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+		        </td>
+					<% end %>
+				<% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<%= link_to 'New', new_recordbook_path, :class => 'btn btn-primary' %>
+<% if admin_signed_in? %>
+	<%= link_to 'New', new_recordbook_path, :class => 'btn btn-primary' %>
+<% end %>

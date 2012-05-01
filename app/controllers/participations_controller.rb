@@ -1,4 +1,5 @@
 class ParticipationsController < ApplicationController
+  before_filter :authenticate_user!
   def create
     @participation = current_user.participations.build(params[:participation])
     @ground = @participation.ground

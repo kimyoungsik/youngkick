@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+  before_filter :admin_approved
+  before_filter :authenticate_user!
   # GET /teams
   # GET /teams.json
   def index
@@ -78,6 +80,14 @@ class TeamsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to teams_url }
       format.json { head :no_content }
+    end
+  end
+  
+  private
+
+  def admin_approved
+    if !admin_signed_in?
+      redirect_to root_path
     end
   end
 end

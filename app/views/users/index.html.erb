@@ -1,4 +1,20 @@
-<h1>사람들</h1>
+<ul>
+	<li class="well">
+		총점수가 가장 높음
+		<%= profile_photo(@users.first, :small, 60) %>
+		<%= @users.first.email %>
+		<%= @users.first.point%>				
+	</li>
+	<li class="well">
+		총점수가 가장 높음
+		<%= profile_photo(@users.first, :small, 60) %>
+		<%= @users.first.email %>
+		<%= @users.first.point%>				
+	</li>
+	
+</ul>
+
+
 <table class="table table-striped">
   <thead>
     <tr>
