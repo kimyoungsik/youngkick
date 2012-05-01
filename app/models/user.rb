@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   attr_accessor :avatar_url 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :birthday, :gender, :facebook_uid, :facebook_token, :point ,:record, :win, :loss, :tie,:forwardpoint, :midfieldpoint, :backpoint, :keeperpoint
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :birthday, :gender, :facebook_uid, :facebook_token, :point ,:record, :win, :loss, :tie,:forwardpoint, :midfieldpoint, :backpoint, :keeperpoint, :level
   
   has_many :grounds, :dependent => :destroy
   has_many :participations, :dependent => :destroy

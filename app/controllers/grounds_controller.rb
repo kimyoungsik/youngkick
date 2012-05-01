@@ -122,7 +122,9 @@ respond_to :html, :json
   
   def authorized_user
     @ground = Ground.find(params[:id])
-    redirect_to grounds_path unless current_user == @ground.user
+    if !admin_signed_in? and current_user != @ground.user
+      redirect_to grounds_path 
+    end
   end
   
   def setTeamForward(teamforwards,team)
@@ -173,11 +175,11 @@ respond_to :html, :json
     teamkeepers.each do |player|
       record = nil
       if(@ground.winner == team)
-       record =   Recordbook.create!(:ground_id => @ground.id,:user_id =>player.user_id,:position_id =>player.position_id,:win => 1,:score => @ground.score,:keeperpoint =>5)
+       record =   Recordbook.create!(:ground_id => @ground.id,:user_id =>player.user_id,:position_id =>player.position_id,:win => 1,:score => @ground.score,:keeperpoint =>10)
       elsif(@ground.winner == 'tie')
-       record =   Recordbook.create!(:ground_id => @ground.id,:user_id =>player.user_id,:position_id =>teamforward.position_id,:tie => 1,:score => @ground.score,:keeperpoint =>3)
+       record =   Recordbook.create!(:ground_id => @ground.id,:user_id =>player.user_id,:position_id =>teamforward.position_id,:tie => 1,:score => @ground.score,:keeperpoint =>8)
       else
-       record =  Recordbook.create!(:ground_id => @ground.id,:user_id =>player.user_id,:position_id =>player.position_id,:loss => 1,:score => @ground.score,:keeperpoint =>1)
+       record =  Recordbook.create!(:ground_id => @ground.id,:user_id =>player.user_id,:position_id =>player.position_id,:loss => 1,:score => @ground.score,:keeperpoint =>5)
         
       end
       updateUserRecord(record)
@@ -185,6 +187,7 @@ respond_to :html, :json
   end
     
   def updateUserRecord(recordbook)
+    # debugger
     win = 0
     loss = 0
     tie = 0
@@ -204,14 +207,37 @@ respond_to :html, :json
     backpoint += user.recordbooks.sum(:backpoint)
     keeperpoint += user.recordbooks.sum(:keeperpoint)
     totalpoint = forwardpoint+midfieldpoint+backpoint+keeperpoint
-    user.update_attributes(:win => win, :loss => loss, :tie => tie, :record => record, :forwardpoint => forwardpoint, :midfieldpoint => midfieldpoint, :backpoint => backpoint, :keeperpoint=> keeperpoint, :point =>   totalpoint)
-   end
+    level = get_level(totalpoint, keeperpoint)
+    user.update_attributes(:win => win, :loss => loss, :tie => tie, :record => record, :forwardpoint => forwardpoint, :midfieldpoint => midfieldpoint, :backpoint => backpoint, :keeperpoint=> keeperpoint, :point =>   totalpoint, :level => level)
+  end
     
   
-  def set_level(point)
-    case point
-    when 0 <= point < 10
- 
+  def get_level(point, keeperpoint)
+    level = 1
+    if 10 <= point and point < 20
+     level = 2
+    elsif 20 <= point and point < 40 and keeperpoint > 0
+      level = 3
+    elsif 40 <= point and point < 80 and keeperpoint > 5
+      level = 4
+    elsif 80 <= point and point < 130 and keeperpoint > 10
+      level =5
+    elsif 130 <= point and point < 190 and keeperpoint > 15
+      level =6
+    elsif 190 <= point and point < 260 and keeperpoint > 20
+      level =7
+    elsif 260 <= point and point < 340 and keeperpoint > 25
+      level =8 
+    elsif 340 <= point and point < 430 and keeperpoint > 30
+      level =9
+    elsif 430 <= point and point < 530 and keeperpoint > 35
+      level =10
+    end
+    level
+  end
+        
+   
   
   
+           
 end

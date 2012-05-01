@@ -1,4 +1,4 @@
-<% if user_signed_in? %>
+<% if user_signed_in? || admin_signed_in? %>
 	
 
 	<ul id = "team_select">
@@ -103,8 +103,8 @@
 						<%= player.user.email %>
 					<% end %>
 				</div> -->
-		
-		<% if current_user.participates_in?(@ground) %>
+<% if !admin_signed_in?%>
+	<% if  current_user.participates_in?(@ground) %>
 		<div class="alert alert-success"%>
          <a class="close" data-dismiss="alert">x</a>
 				참여했습니다.
@@ -228,5 +228,5 @@
 				<% end %>
 			</li>
 		</ul>
-
+	<% end %>
 <% end %>

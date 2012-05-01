@@ -1,5 +1,5 @@
 class Ground < ActiveRecord::Base
-  validates_presence_of :user_id, :title, :location, :datetime, :forwardcount, :midfieldcount , :backcount , :keepercount, :limit, :limitday, :photo_file_name
+  validates_presence_of :user_id, :title, :location, :datetime, :forwardcount, :midfieldcount , :backcount , :keepercount, :limit, :limitday
   
   # has_attached_file :photo
    attr_accessible  :user_id, :title, :location, :datetime, :forwardcount, :midfieldcount , :backcount , :keepercount, :limit, :status, :description, :winner, :score, :limitday, :photo
